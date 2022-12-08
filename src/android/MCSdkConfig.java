@@ -90,15 +90,17 @@ public class MCSdkConfig {
                             builder.setAnalyticsEnabled("true".equalsIgnoreCase(val));
                             break;
                         case CONFIG_PREFIX + "notification_small_icon":
-                            int notifId = context.getResources().getIdentifier(
+							int notifId = context.getResources().getIdentifier(
                                 val, "drawable", context.getPackageName());
-                            if (notifId != 0) {
-								NotificationCustomizationOptions opts = 
-									NotificationCustomizationOptions.create(notifId)
+							if (notifId != 0) {
+								NotificationCustomizationOptions opts =
+									NotificationCustomizationOptions.create(notifId);
 								// If 'opts' is null because of a bad icon name in config,
 								// it will crash the app on startup.
 								if (opts != null) {
                                 	builder.setNotificationCustomizationOptions(opts);
+								} else {
+									Log.w(TAG, "Unable to read notification icon, options came back null with notifId=" + notifId);
 								}
                             }
                             break;
