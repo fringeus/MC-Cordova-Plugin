@@ -91,10 +91,15 @@ public class MCSdkConfig {
                             break;
                         case CONFIG_PREFIX + "notification_small_icon":
                             int notifId = context.getResources().getIdentifier(
-                                val, "mipmap", context.getPackageName());
+                                val, "drawable", context.getPackageName());
                             if (notifId != 0) {
-                                builder.setNotificationCustomizationOptions(
-                                    NotificationCustomizationOptions.create(notifId));
+								NotificationCustomizationOptions opts = 
+									NotificationCustomizationOptions.create(notifId)
+								// If 'opts' is null because of a bad icon name in config,
+								// it will crash the app on startup.
+								if (opts != null) {
+                                	builder.setNotificationCustomizationOptions(opts);
+								}
                             }
                             break;
                         case CONFIG_PREFIX + "tenant_specific_endpoint":
