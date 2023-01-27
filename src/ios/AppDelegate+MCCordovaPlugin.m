@@ -62,6 +62,9 @@
     didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // save the device token
     [[MarketingCloudSDK sharedInstance] sfmc_setDeviceToken:deviceToken];
+
+	// Log device token for debugging
+	NSLog(@"### didRegisterForRemoteNotificationsWithDeviceToken: deviceToken: %@", deviceToken);
 }
 
 - (void)application:(UIApplication *)application

@@ -126,8 +126,12 @@ const int LOG_LENGTH = 800;
         NSDictionary *pluginSettings = self.commandDelegate.settings;
 
         MarketingCloudSDKConfigBuilder *configBuilder = [MarketingCloudSDKConfigBuilder new];
-        [configBuilder
-            sfmc_setApplicationId:pluginSettings[@"com.salesforce.marketingcloud.app_id"]];
+        NSString *settingsAppId = pluginSettings[@"com.salesforce.marketingcloud.app_id"];
+        
+        // Can uncomment to ensure app id is set properly
+        // NSLog(@"### pluginInitialize: app_id: %@", settingsAppId);
+              
+        [configBuilder sfmc_setApplicationId:settingsAppId];
         [configBuilder
             sfmc_setAccessToken:pluginSettings[@"com.salesforce.marketingcloud.access_token"]];
 
@@ -196,6 +200,15 @@ const int LOG_LENGTH = 800;
                           }];
                       }
                     }];
+    
+        
+        // turn on logging for debugging.  Not recommended for production apps.
+        // Set to true to enable logging while debugging
+        [[MarketingCloudSDK sharedInstance] sfmc_setDebugLoggingEnabled:true];
+
+        // Log SDK state. Not recommended for production apps.
+        NSLog(@"### pluginInitialize: getSDKState: %@", [[MarketingCloudSDK sharedInstance] sfmc_getSDKState]);
+
     }
 }
 
